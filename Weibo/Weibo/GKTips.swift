@@ -1,5 +1,5 @@
 //
-//  FETips.swift
+//  GKTips.swift
 //  ch74
 //
 //  Created by apps on 14/12/3.
@@ -8,8 +8,10 @@
 
 import UIKit
 
-class FETips: NSObject {
-   
+final class GKTips: NSObject {
+    
+    static let tips = GKTips()
+    
     var tipsView:UIView = UIView()
     var activityIndicatorView:UIActivityIndicatorView = UIActivityIndicatorView()
     var tipsViewlabel = UILabel()
@@ -22,7 +24,7 @@ class FETips: NSObject {
 
     var duration:UInt64 = 1
     
-    override init() {
+    override private init() {
     
         super.init()
         tipsView.layer.cornerRadius = 6
@@ -80,7 +82,7 @@ class FETips: NSObject {
 
         if caneBeCancle {
 
-            let tipsViewGesture = UITapGestureRecognizer(target: self, action: "tipsViewTapHandle:")
+            let tipsViewGesture = UITapGestureRecognizer(target: self, action: #selector(GKTips.tipsViewTapHandle(_:)))
             tipsViewGesture.numberOfTapsRequired = 1
             tipsView.addGestureRecognizer(tipsViewGesture)
 
@@ -132,7 +134,7 @@ class FETips: NSObject {
         let time = dispatch_time(DISPATCH_TIME_NOW, (Int64)(duration * NSEC_PER_SEC))
 
         /*
-        这里保持了 FETips 的实例，所以在调用的方法里面生成 FETips 在方法退出的时候不会马上释放FETips实例，
+        这里保持了 GKTips 的实例，所以在调用的方法里面生成 GKTips 在方法退出的时候不会马上释放GKTips实例，
         从而可以使得 UITapGestureRecognizer 事件响应依然有效
         没有下面的dispatch_after，响应一定会崩溃
         */
@@ -216,7 +218,7 @@ class FETips: NSObject {
             
             if self.caneBeCancle {
                 
-                let activityIndicatorViewGesture = UITapGestureRecognizer(target: self, action: "activityIndicatorViewTapHandle:")
+                let activityIndicatorViewGesture = UITapGestureRecognizer(target: self, action: #selector(GKTips.activityIndicatorViewTapHandle(_:)))
                 activityIndicatorViewGesture.numberOfTapsRequired = 1
                 self.activityIndicatorView.addGestureRecognizer(activityIndicatorViewGesture)
                 
@@ -285,7 +287,7 @@ class FETips: NSObject {
             
             if self.caneBeCancle {
 
-                let activityIndicatorViewGesture = UITapGestureRecognizer(target: self, action: "activityIndicatorViewTapHandle:")
+                let activityIndicatorViewGesture = UITapGestureRecognizer(target: self, action: #selector(GKTips.activityIndicatorViewTapHandle(_:)))
                 activityIndicatorViewGesture.numberOfTapsRequired = 1
                 self.activityIndicatorView.addGestureRecognizer(activityIndicatorViewGesture)
 

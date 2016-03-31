@@ -7,19 +7,21 @@
 //
 
 import UIKit
+import SDWebImage
 
 class WBHomeMyCardViewController: UIViewController {
 
     @IBOutlet weak var lab_name: UILabel!
-    @IBOutlet weak var imgv_avatar: NSLayoutConstraint!
     @IBOutlet weak var imgv_card: UIImageView!
+    @IBOutlet weak var imgv_avatar: UIImageView!
     
-    // MARK: - 
+    // MARK: -
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         imgv_card.image = createQRCodeImage()
+        imgv_avatar.sd_setImageWithURL(NSURL(string: Defaults[.avatar_large]), placeholderImage: UIImage(named: "avatar_default"), options: .ContinueInBackground)
        
     }
 

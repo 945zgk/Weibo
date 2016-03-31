@@ -14,12 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         window = UIWindow(frame: SCREEN_BOUNDS)
-        window?.rootViewController = WBMainViewController()
         window?.makeKeyAndVisible()
+        
+        switchRootViewController()
+//        window?.rootViewController = WBNewFeatureViewController()
         
         return true
     }
@@ -109,6 +110,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 abort()
             }
         }
+    }
+    
+    // MARK: - RootViewController
+    
+    private func switchRootViewController() {
+        
+        let time = Defaults[.expires_in]
+        let expires = NSDate(timeIntervalSinceNow: (Double)(time))
+        
+        if expires.compare(NSDate()) == .OrderedAscending {
+            Defaults[.access_token] = ""
+            window?.rootViewController = WBOAuthViewController()
+            return
+        }
+            
+        if Defaults[.APP_TOKEN] == "" {
+            window?.rootViewController = WBOAuthViewController()
+        } else if Defaults[.first_login]{
+            window?.rootViewController = WBNewFeatureViewController()
+            Defaults[.first_login] = false
+        } else {
+            window?.rootViewController = WBWelcomeViewController()
+        }
+
+        
     }
 
 }

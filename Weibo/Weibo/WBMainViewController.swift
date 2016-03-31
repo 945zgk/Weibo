@@ -53,7 +53,9 @@ class WBMainViewController: UITabBarController {
     
     private func configureChildViewControlelr() {
         
-        configureAddChildViewController(WBHomeViewController(), title: "首页", imageName: "tabbar_home")
+        let homeViewController = UIStoryboard(name: "WBHome", bundle: nil).instantiateViewControllerWithIdentifier("WBHomeViewController") as! WBHomeViewController
+        
+        configureAddChildViewController(homeViewController, title: "首页", imageName: "tabbar_home")
         configureAddChildViewController(WBMessageViewController(), title: "消息", imageName: "tabbar_message_center")
         configureAddChildViewController(UIViewController(), title: "", imageName: "")
         configureAddChildViewController(WBDiscoverViewController(), title: "发现", imageName: "tabbar_discover")
